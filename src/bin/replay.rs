@@ -36,7 +36,7 @@ fn main() {
     child.proxy(PtyCallback::new().build()).unwrap();
     // Child stops here. Now it's all the parent.
 
-    println!("Starting replay");
+    print!("Starting replay.\r\n");
     let mut current = 0f64;
     for record in reader.decode() {
         let (time, record): (f64, Vec<String>) = record.unwrap();
