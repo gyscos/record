@@ -1,10 +1,10 @@
 [package]
 authors = ["Alexandre Bury <alexandre.bury@gmail.com>"]
-description = "Command-line utility to record input sent to a terminal session."
+description = "Command-line utilities to record and replay input sent to a terminal session."
 keywords = ["input", "terminal", "TTY", "record"]
 license = "MIT"
 name = "record"
-version = "0.1.1"
+version = "0.2.0"
 
 [dependencies]
 clap = "2.16.1"
