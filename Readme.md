@@ -2,6 +2,10 @@
 
 Command-line utility to record a terminal session.
 
+# Installation
+
+`cargo install record`
+
 # Example
 
 ```
@@ -11,7 +15,7 @@ Press Ctrl-D or `exit` to stop.
 $ ls
 Dektop/ Mail/ Music/ Documents/ Pictures/
 $ top
-$
+$ ^D
 Input saved as `recorded_input`.
 $ cat recorded_input
 3.595 'l'
