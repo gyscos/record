@@ -24,6 +24,11 @@ fn main() {
     let filename = matches.value_of("input").unwrap_or("recorded_input");
     let keep = matches.is_present("keep");
 
+    let mut reader = csv::Reader::from_file(filename)
+        .expect(&format!("Could not find input file: `{}`", filename))
+        .has_headers(false)
+        .delimiter(b'\t')
+        .flexible(true);
 
     let child = pty::fork().unwrap();
     child.exec(std::env::var("SHELL").unwrap_or(String::from("bash")))
@@ -32,11 +37,6 @@ fn main() {
     // Child stops here. Now it's all the parent.
 
     println!("Starting replay");
-    let mut reader = csv::Reader::from_file(filename)
-        .unwrap()
-        .has_headers(false)
-        .delimiter(b'\t')
-        .flexible(true);
     let mut current = 0f64;
     for record in reader.decode() {
         let (time, record): (f64, Vec<String>) = record.unwrap();
