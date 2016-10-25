@@ -48,12 +48,15 @@ fn main() {
             let token = &token[1..token.len() - 1];
             let bytes = if token.starts_with('\\') {
                 vec![match token {
+                         "\\\"" => b'"',
+                         "\\'" => b'\'',
                          "\\r" => b'\r',
                          "\\t" => b'\t',
-                         other => {
+                         other if other.starts_with("\\u{") => {
                              let n = &other[3..other.len() - 1];
                              u8::from_str_radix(n, 16).unwrap()
                          }
+                         other => panic!("Found token {:?}", other),
                      }]
             } else {
                 token.as_bytes().to_vec()
