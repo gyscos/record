@@ -1,13 +1,14 @@
 [package]
 authors = ["Alexandre Bury <alexandre.bury@gmail.com>"]
-name = "record"
-version = "0.1.1"
-license = "MIT"
 description = "Command-line utility to record input sent to a terminal session."
 keywords = ["input", "terminal", "TTY", "record"]
+license = "MIT"
+name = "record"
+version = "0.1.1"
 
 [dependencies]
 clap = "2.16.1"
+csv = "0.14.7"
 pty = "0.1.6"
 pty-shell = "0.1.4"
 time = "0.1.35"
