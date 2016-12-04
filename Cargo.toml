@@ -4,7 +4,7 @@ description = "Command-line utilities to record and replay input sent to a termi
 keywords = ["input", "terminal", "TTY", "record"]
 license = "MIT"
 name = "record"
-version = "0.2.1"
+version = "0.2.2"
 
 [dependencies]
 clap = "2.16.1"

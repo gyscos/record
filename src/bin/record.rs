@@ -48,7 +48,11 @@ Press Ctrl-D or `exit` to stop.",
                 write!(&mut output, "{:.3}", time::precise_time_s() - start)
                     .unwrap();
                 for &byte in input {
-                    write!(&mut output, "\t{:?}", byte as char).unwrap();
+                    if byte < 128 {
+                        write!(&mut output, "\t{:?}", byte as char).unwrap();
+                    } else {
+                        write!(&mut output, "\t'\\u{{{:x}}}'", byte).unwrap();
+                    }
                 }
                 writeln!(&mut output, "").unwrap();
             })
