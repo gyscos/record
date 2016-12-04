@@ -51,7 +51,7 @@ Press Ctrl-D or `exit` to stop.",
                     if byte < 128 {
                         write!(&mut output, "\t{:?}", byte as char).unwrap();
                     } else {
-                        write!(&mut output, "\t'\\u{{{:x}}}'", byte).unwrap();
+                        write!(&mut output, "\t'\\x{:x}'", byte).unwrap();
                     }
                 }
                 writeln!(&mut output, "").unwrap();

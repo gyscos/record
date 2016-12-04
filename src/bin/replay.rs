@@ -52,6 +52,10 @@ fn main() {
                          "\\'" => b'\'',
                          "\\r" => b'\r',
                          "\\t" => b'\t',
+                         other if other.starts_with("\\x") => {
+                             let n = &other[2..other.len() - 1];
+                             u8::from_str_radix(n, 16).unwrap()
+                         }
                          other if other.starts_with("\\u{") => {
                              let n = &other[3..other.len() - 1];
                              u8::from_str_radix(n, 16).unwrap()
