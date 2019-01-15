@@ -7,8 +7,8 @@ name = "record"
 version = "0.2.3"
 
 [dependencies]
-clap = "2.16.1"
-csv = "0.14.7"
-pty = "0.1.6"
-pty-shell = "0.1.4"
-time = "0.1.35"
+clap = "2.32.0"
+csv = "1.0.5"
+pty = "0.2.2"
+pty-shell = {git = "https://github.com/euank/pty-shell", branch="staticy"}
+time = "0.1.42"
