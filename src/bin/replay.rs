@@ -1,32 +1,23 @@
-#[macro_use]
-extern crate clap;
-extern crate csv;
-extern crate pty;
-extern crate pty_shell;
-
-use clap::{App, Arg};
+use clap::Parser;
 use pty_shell::{PtyCallback, PtyShell};
 use std::io::Write;
 use std::time::Duration;
 
-fn main() {
-    let matches = App::new("replay")
-        .version(crate_version!())
-        .arg(
-            Arg::with_name("input")
-                .index(1)
-                .help("Input file. Defaults to `recorded_input`."),
-        )
-        .arg(
-            Arg::with_name("keep")
-                .short("k")
-                .long("keep")
-                .help("Keep the session alive after replay."),
-        )
-        .get_matches();
+#[derive(Parser, Debug)]
+#[command(author, version, about)]
+struct Args {
+    /// Input file. Defaults to `recorded_input`.
+    input: Option<String>,
 
-    let filename = matches.value_of("input").unwrap_or("recorded_input");
-    let keep = matches.is_present("keep");
+    #[arg(short, long)]
+    keep: bool,
+}
+
+fn main() {
+    let args = Args::parse();
+
+    let filename = args.input.as_deref().unwrap_or("recorded_input");
+    let keep = args.keep;
 
     let mut reader = csv::ReaderBuilder::new()
         .has_headers(false)

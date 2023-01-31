@@ -1,37 +1,26 @@
-#[macro_use]
-extern crate clap;
-extern crate pty;
-extern crate pty_shell;
-extern crate time;
-
-use clap::{App, Arg};
 use pty_shell::{PtyCallback, PtyShell};
+
+use clap::Parser;
 
 use std::io::Write;
 
+/// Starts a recording session.
+/// All input will be recorded to the given file.
+///
+/// The resulting file will consist in a number of lines, each prefixed with
+/// the time in seconds since the beginning of the session, and a list of
+/// bytes sent.
+#[derive(Parser, Debug)]
+#[command(author, version, about)]
+struct Args {
+    /// Output file. Defaults to `recorded_input`.
+    output: Option<String>,
+}
+
 fn main() {
-    let matches = App::new("record")
-        .about(
-            "\
-Starts a recording session.
-All input will be recorded to \
-                the given file.
+    let args = Args::parse();
 
-The resulting file will consist in a \
-                number of lines, each prefixed with the
-time in seconds \
-                since the beginning of the session, and a list of bytes \
-                sent.",
-        )
-        .version(crate_version!())
-        .arg(
-            Arg::with_name("output")
-                .index(1)
-                .help("Output file. Defaults to `recorded_input`."),
-        )
-        .get_matches();
-
-    let filename = matches.value_of("output").unwrap_or("recorded_input");
+    let filename = args.output.as_deref().unwrap_or("recorded_input");
 
     println!(
         "\
@@ -47,7 +36,7 @@ Press Ctrl-D or `exit` to stop.",
     // Child stops here. Now it's all the parent.
 
     let mut output = std::fs::File::create(filename).unwrap();
-    let start = time::precise_time_s();
+    let start = time::Instant::now();
     child
         .proxy(
             PtyCallback::new()
@@ -55,7 +44,7 @@ Press Ctrl-D or `exit` to stop.",
                     write!(
                         &mut output,
                         "{:.3}",
-                        time::precise_time_s() - start
+                        start.elapsed().as_seconds_f32(),
                     )
                     .unwrap();
                     for &byte in input {

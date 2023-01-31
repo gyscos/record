@@ -5,10 +5,11 @@ keywords = ["input", "terminal", "TTY", "record"]
 license = "MIT"
 name = "record"
 version = "0.2.3"
+edition = "2021"
 
 [dependencies]
-clap = "2.32.0"
+clap = { version = "4", features = ["derive"] }
 csv = "1.0.5"
 pty = "0.2.2"
 pty-shell = {git = "https://github.com/euank/pty-shell", branch="staticy"}
-time = "0.1.42"
+time = "0.3"
