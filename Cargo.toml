@@ -10,6 +10,9 @@ edition = "2021"
 [dependencies]
 clap = { version = "4", features = ["derive"] }
 csv = "1.0.5"
-pty = "0.2.2"
-pty-shell = {git = "https://github.com/euank/pty-shell", branch="staticy"}
+pty = "0.2"
+pty-shell = {git = "https://github.com/mjarkk/pty-shell"}
 time = "0.3"
+
+[patch.crates-io]
+pty = { git = "https://github.com/ethanpailes/pty-rs" }
